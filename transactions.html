@@ -1,0 +1,186 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>FinanceFlow - Transactions</title>
+    <link rel="stylesheet" href="src/style.css" />
+  </head>
+  <body>
+    <div class="app-container">
+      <!-- Navigation Sidebar -->
+      <aside class="sidebar">
+        <div class="brand">
+          <div class="brand-icon">FF</div>
+          <span>FinanceFlow</span>
+        </div>
+        <nav>
+          <ul class="nav-list">
+            <li>
+              <a href="index.html" class="nav-link">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M2.25 12l8.954-8.955c.44-.439 1.152-.439 1.591 0L21.75 12M4.5 9.75v10.125c0 .621.504 1.125 1.125 1.125H9.75v-4.875c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125V21.75h4.125c.621 0 1.125-.504 1.125-1.125V9.75M8.25 21.75h7.5" />
+                </svg>
+                <span>Dashboard</span>
+              </a>
+            </li>
+            <li>
+              <a href="analytics.html" class="nav-link">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M10.5 6a7.5 7.5 0 107.5 7.5h-7.5V6z" />
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M13.5 10.5H21A7.5 7.5 0 0013.5 3v7.5z" />
+                </svg>
+                <span>Analytics</span>
+              </a>
+            </li>
+            <li>
+              <a href="transactions.html" class="nav-link active">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M8.25 6.75h12M8.25 12h12M8.25 17.25h12M3.75 6.75h.007v.008H3.75V6.75zm.375 0a.375.375 0 11-.75 0 .375.375 0 01.75 0zM3.75 12h.007v.008H3.75V12zm.375 0a.375.375 0 11-.75 0 .375.375 0 01.75 0zm-.375 5.25h.007v.008H3.75v-.008zm.375 0a.375.375 0 11-.75 0 .375.375 0 01.75 0z" />
+                </svg>
+                <span>Transactions</span>
+              </a>
+            </li>
+          </ul>
+        </nav>
+        <div class="nav-footer">
+          <div class="user-profile">
+            <div class="user-avatar">UD</div>
+            <div class="user-info">
+              <div class="user-name">User Dashboard</div>
+              <div class="user-role">Personal Plan</div>
+            </div>
+          </div>
+        </div>
+      </aside>
+
+      <!-- Main Layout -->
+      <main class="main-content">
+        <header class="content-header">
+          <div class="greeting">
+            <h1>Transaction History</h1>
+            <p>Review, search, and filter your financial history ledger.</p>
+          </div>
+          <div class="header-actions">
+            <button class="btn btn-primary" id="btn-add-tx">
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor" style="width:16px;height:16px;">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
+              </svg>
+              Add Transaction
+            </button>
+          </div>
+        </header>
+
+        <!-- Filters Section -->
+        <section class="filters-bar card-glass">
+          <div class="search-input-wrapper">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+            </svg>
+            <input type="text" id="search-tx" class="form-control" placeholder="Search transactions..." />
+          </div>
+          <select id="filter-type" class="form-control filter-select">
+            <option value="all">All Types</option>
+            <option value="income">Inflow (Income)</option>
+            <option value="expense">Outflow (Expense)</option>
+          </select>
+          <select id="filter-category" class="form-control filter-select">
+            <option value="all">All Categories</option>
+            <option value="Food">Food</option>
+            <option value="Housing">Housing</option>
+            <option value="Utilities">Utilities</option>
+            <option value="Transport">Transport</option>
+            <option value="Entertainment">Entertainment</option>
+            <option value="Salary">Salary</option>
+            <option value="Freelance">Freelance</option>
+            <option value="Others">Others</option>
+          </select>
+          <button class="btn btn-secondary" id="btn-reset-filters" style="padding:0.75rem 1rem;">Reset</button>
+        </section>
+
+        <!-- Transaction Ledger Table -->
+        <section class="card-glass ledger-card">
+          <div class="ledger-table-container">
+            <table class="ledger-table">
+              <thead>
+                <tr>
+                  <th>Transaction</th>
+                  <th>Category</th>
+                  <th>Date</th>
+                  <th>Type</th>
+                  <th>Amount</th>
+                  <th>Actions</th>
+                </tr>
+              </thead>
+              <tbody id="ledger-body">
+                <!-- Rendered Dynamically -->
+              </tbody>
+            </table>
+          </div>
+          <div id="ledger-empty-state" class="empty-state" style="display:none;">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.172 16.172a4 4 0 015.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+            </svg>
+            <h3>No results found</h3>
+            <p>Try adjusting your search filters or add a new transaction.</p>
+          </div>
+        </section>
+      </main>
+    </div>
+
+    <!-- Add Transaction Modal -->
+    <div class="modal-overlay" id="tx-modal">
+      <div class="modal-card">
+        <div class="modal-header">
+          <h2>Add Transaction</h2>
+          <button class="modal-close-btn" id="btn-close-modal">&times;</button>
+        </div>
+        <form id="tx-form">
+          <div class="form-group">
+            <label class="form-label" for="tx-title">Title</label>
+            <input type="text" id="tx-title" class="form-control" placeholder="e.g. Electricity Bill" required />
+          </div>
+          <div class="form-row">
+            <div class="form-group">
+              <label class="form-label" for="tx-amount">Amount (₹)</label>
+              <input type="number" id="tx-amount" class="form-control" placeholder="1000" min="1" required />
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="tx-type">Type</label>
+              <select id="tx-type" class="form-control" required>
+                <option value="expense">Expense</option>
+                <option value="income">Income</option>
+              </select>
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="form-group">
+              <label class="form-label" for="tx-category">Category</label>
+              <select id="tx-category" class="form-control" required>
+                <option value="Food">Food</option>
+                <option value="Housing">Housing</option>
+                <option value="Utilities">Utilities</option>
+                <option value="Transport">Transport</option>
+                <option value="Entertainment">Entertainment</option>
+                <option value="Salary">Salary</option>
+                <option value="Freelance">Freelance</option>
+                <option value="Others">Others</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="tx-date">Date</label>
+              <input type="date" id="tx-date" class="form-control" required />
+            </div>
+          </div>
+          <div class="form-actions">
+            <button type="button" class="btn btn-secondary" id="btn-cancel-modal">Cancel</button>
+            <button type="submit" class="btn btn-primary">Save Transaction</button>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <script src="src/state.js"></script>
+    <script src="src/transactions.js"></script>
+  </body>
+</html>
